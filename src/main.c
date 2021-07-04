@@ -95,7 +95,9 @@ int main(int argc, char **argv) {
       }
     }
     
-    memcpy(&lastKey[0], &key[0], KEY_MAX);
+    for (int i = 0; i < KEY_MAX; i++) {
+      lastKey[i] = key[i];
+    }
   } while (looping);
 
   return 0;

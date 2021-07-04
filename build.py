@@ -12,7 +12,7 @@ BIN_NAME = "launch.exe"
 EMBED_GLOB = "src/embed/*"
 TEMPSRC_DIR = ".tempsrc"
 
-CFLAGS = ["-O2", "-Wall", "-s", "-Wno-misleading-indentation"]
+CFLAGS = ["-O2", "-Wall", "-s"]
 DLIBS = ["alleg"]
 DLIBDIRS = ["lib"]
 DEFINES = []
