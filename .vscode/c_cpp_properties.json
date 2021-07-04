@@ -4,7 +4,9 @@
             "name": "Mac",
             "includePath": [
                 "${workspaceFolder}/**",
-                "${workspaceFolder}/../djgpp/i586-pc-msdosdjgpp/sys-include"
+                "${workspaceFolder}/../djgpp/i586-pc-msdosdjgpp/sys-include",
+                "${workspaceFolder}/.embedout"
+
             ],
             "defines": [],
             "macFrameworkPath": [

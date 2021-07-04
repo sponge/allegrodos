@@ -2,3 +2,4 @@
 *.SWP
 bin/keen6
 bin/launch.exe
+.embedout

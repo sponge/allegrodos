@@ -10,7 +10,7 @@ SRC_GLOB = "src/**"
 BIN_DIR = "bin"
 BIN_NAME = "launch.exe"
 EMBED_GLOB = "src/embed/*"
-TEMPSRC_DIR = ".tempsrc"
+TEMPSRC_DIR = ".embedout"
 
 CFLAGS = ["-O2", "-Wall", "-s"]
 DLIBS = ["alleg"]
@@ -23,7 +23,7 @@ def make_c_include(name, data):
     name = re.sub("[^a-z0-9]", "_", name.lower())
     res = "static const char " + name + "[] = {"
     for c in data:
-        res += str(ord(c)) + ", "
+        res += str(c) + ", "
     res = res.rstrip(", ") + "};"
     return name, textwrap.fill(res, width=99)
 
@@ -41,8 +41,8 @@ def main():
 
     for filename in embedded_files:
         name = os.path.basename(filename)
-        name, text = make_c_include(name, open(filename).read())
-        open(f'{TEMPSRC_DIR}/{name}.h', "wb").write(text)
+        name, text = make_c_include(name, open(filename, 'rb').read())
+        open(f'{TEMPSRC_DIR}/{name}.h', "w").write(text)
 
     cfiles = [x for x in glob.glob(SRC_GLOB, recursive=True) if x.lower().endswith(('.c'))]
 
@@ -62,10 +62,6 @@ def main():
     print("compiling...")
     print(cmd)
     res = os.system(cmd)
-
-    print("deleting temporary files...")
-    if os.path.exists(TEMPSRC_DIR):
-        shutil.rmtree(TEMPSRC_DIR)
 
     print("done" + (" with errors" if res else ""))
 
