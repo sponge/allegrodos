@@ -58,7 +58,7 @@ int main(int argc, char **argv) {
   BITMAP *bg = bmp("bg.bmp", &pal);
   set_palette(pal);
 
-  BITMAP *selected = bmp("selected.bmp", NULL);
+  BITMAP *bgon = bmp("bg_on.bmp", &pal);
 
   const int maxItems = 6;
 
@@ -67,7 +67,9 @@ int main(int argc, char **argv) {
     rectfill(screen, 0, 0, 320, 200, 16);
 
     masked_blit(bg, screen, 0, 0, 0, 0, bg->w, bg->h);
-    masked_blit(selected, screen, 0, 0, 84, selectedIdx * 17 + 57, selected->w, selected->w);
+    int x = 84;
+    int y = selectedIdx * 17 + 57;
+    masked_blit(bgon, screen, x, y, x, y, 150, 13);
 
     if (keypressed()) {      
       if (!lastKey[KEY_UP] && key[KEY_UP]) {
