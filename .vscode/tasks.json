@@ -1,0 +1,21 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "shell",
+			"label": "Run build.py",
+			"command": "python3",
+			"args": [
+				"build.py",
+			],
+			"options": {
+				"cwd": "${workspaceFolder}",
+				"env": {"PATH": "${workspaceFolder}/../djgpp/bin:${env:PATH}"}
+			},
+			"problemMatcher": [
+				"$gcc"
+			],
+			"group": "build",
+		}
+	]
+}
