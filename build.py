@@ -44,8 +44,7 @@ def main():
         name, text = make_c_include(name, open(filename).read())
         open(f'{TEMPSRC_DIR}/{name}.h', "wb").write(text)
 
-    cfiles = [x for x in glob.glob(
-        SRC_GLOB, recursive=True) if x.lower().endswith(('.c'))]
+    cfiles = [x for x in glob.glob(SRC_GLOB, recursive=True) if x.lower().endswith(('.c'))]
 
     opt = {
         "compiler": COMPILER,
@@ -58,8 +57,7 @@ def main():
         "libdirs": " ".join(map(lambda x: "-L" + x, DLIBDIRS)),
         "argv": " ".join(sys.argv[1:])
     }
-    cmd = "{compiler} {flags} {defines} {includes} -o {outfile} {srcfiles} {libdirs} {libs} {argv}".format(
-        **opt)
+    cmd = "{compiler} {flags} {defines} {includes} -o {outfile} {srcfiles} {libdirs} {libs} {argv}".format(**opt)
 
     print("compiling...")
     print(cmd)
