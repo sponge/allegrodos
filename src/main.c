@@ -33,16 +33,6 @@ void ticker(void)
 }
 END_OF_FUNCTION(ticker)
 
-const char * items[] = {
-  "Launch 1",
-  "Launch 2",
-  "Launch 3",
-  "Launch 4",
-  "Launch 5",
-  "Launch 6",
-};
-int itemLen = sizeof(items) / sizeof(items[0]);
-
 bool looping = true;
 int selectedIdx = 0;
 char lastKey[KEY_MAX];
@@ -68,30 +58,33 @@ int main(int argc, char **argv) {
   BITMAP *bg = bmp("bg.bmp", &pal);
   set_palette(pal);
 
+  BITMAP *selected = bmp("selected.bmp", NULL);
+
+  const int maxItems = 6;
+
   do {
     vsync();
     rectfill(screen, 0, 0, 320, 200, 16);
 
-    for (int i = 0; i < itemLen; i++) {
-      textout_ex(screen, font, items[i], 100, i*10 + 60, 2, 16);
-    }
-    textout_ex(screen, font, ">", 90, selectedIdx * 10 + 60, 2, 16);
-
     masked_blit(bg, screen, 0, 0, 0, 0, bg->w, bg->h);
+    masked_blit(selected, screen, 0, 0, 84, selectedIdx * 17 + 57, selected->w, selected->w);
 
     if (keypressed()) {      
       if (!lastKey[KEY_UP] && key[KEY_UP]) {
         selectedIdx--;
         if (selectedIdx < 0) {
-          selectedIdx = itemLen - 1;
+          selectedIdx = maxItems - 1;
         }
         
       } else if (!lastKey[KEY_DOWN] && key[KEY_DOWN]) {
-        selectedIdx = (selectedIdx + 1) % itemLen;
+        selectedIdx = (selectedIdx + 1) % maxItems;
 
       } else if (key[KEY_ENTER]) {
         return selectedIdx + 1;
-      
+        
+      } else if (key[KEY_ESC]) {
+        return 0;
+        
       }
     }
     
